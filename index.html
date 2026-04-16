@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ar">
+<link rel="icon" href="Img.jpg.webp">
+<head>
+    <meta charset="UTF-8">
+    <title>group 14 — القواعد بيننا</title>
+    <style>
+        body {
+            font-family: monospace;
+            background-color: #b0b0b0;
+            color: #333;
+            margin: 0;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #c00;
+            /* العنوان الأحمر */
+            margin-bottom: 30px;
+        }
+
+        #output {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 80px;
+            /* مساحة لزر ثابت أسفل */
+        }
+
+        .rule {
+            background-color: #fff;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            width: 80%;
+            max-width: 600px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+            font-size: 18px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        #final {
+            font-size: 19px;
+            /* أكبر قليلاً فقط لتكون واضحة، لا تشبه العنوان */
+            font-weight: bold;
+            margin-top: 20px;
+            color: #1f618d;
+            /* اللون الأزرق */
+        }
+
+        #skipButton {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 25px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        #skipButton:hover {
+            background-color: #1e7e34;
+        }
+        p {
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+<p>@by_rafik</p>
+    <h1>group 14 — القواعد بيننا</h1>
+    <div id="output"></div>
+    <button id="skipButton">عرض كل القواعد فوراً</button>
+
+    <script>
+        const rules = [
+            "1) الاحترام هو أساس المجموعة.",
+            "2) التعاون متبادل بين جميع الأعضاء.",
+            "3) الحفاظ على جو إيجابي.",
+            "4) لكل عضو الحق في الكلام.",
+            "5) الصمت مسموح — لكل شخص مساحته.",
+            "6) لا يوجد إهانات أو لغة مسيئة.",
+            "7) لا تهديدات أو كلام عنيف.",
+            "8) شارك معلومات مفيدة وقيّمة.",
+            "9) تجنب الشائعات أو المحتوى الضار.",
+            "10) احترام خصوصية الأعضاء دائمًا.",
+            "11) حل النزاعات بهدوء واحترام.",
+            "12) اتباع تعليمات الإدارة للحفاظ على النظام.",
+            "13) تجنب الرسائل المكررة أو السبام.",
+            "14) نشر الإيجابية وجعل المجموعة ممتعة."
+        ];
+
+        const colors = [
+            "#d35400", "#1f618d", "#b9770e", "#117a65", "#6e2c00",
+            "#7d6608", "#117864", "#2e4053", "#9c640c", "#1a5276",
+            "#b03a2e", "#4d5656", "#6c3483", "#2874a6"
+        ];
+
+        const output = document.getElementById('output');
+        const skipButton = document.getElementById('skipButton');
+
+        let charDelay = 40;
+        const lineDelay = 500;
+        let skip = false;
+
+        async function showRule(text, color, isFinal = false) {
+            const div = document.createElement('div');
+            if (isFinal) {
+                div.id = 'final';
+                div.textContent = text;
+            } else {
+                div.className = 'rule';
+                div.style.color = color;
+                div.textContent = text;
+            }
+            output.appendChild(div);
+
+            if (skip) {
+                div.style.opacity = 1;
+                div.style.transform = 'translateY(0)';
+                return;
+            }
+
+            await new Promise(r => setTimeout(r, charDelay));
+            div.style.opacity = 1;
+            div.style.transform = 'translateY(0)';
+            await new Promise(r => setTimeout(r, lineDelay));
+        }
+
+        async function showRules() {
+            for (let i = 0; i < rules.length; i++) {
+                await showRule(rules[i], colors[i]);
+            }
+            await showRule("اشكرك لانضمامك إلى المجموعة 14", null, true);
+        }
+
+        skipButton.addEventListener('click', () => { skip = true; });
+
+        showRules();
+    </script>
+
+</body>
+
+</html>
